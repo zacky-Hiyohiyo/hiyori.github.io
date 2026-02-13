@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>不败的世界与终焉之花</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            /* 背景由JS动态设置，此处保留回退 */
+            background-color: #1a1e2c;
+        }
+
+        .header {
+            height: 86px;
+            background-color: rgba(12, 230, 99, 0.5);
+            backdrop-filter: blur(3px);
+            width: 100%;
+            flex-shrink: 0;
+        }
+
+        .header .wrapper {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo a {
+            display: block;
+            width: 80px;
+            height: 80px;
+            font-size: 0;
+            background-image: url(./title_ico/user3.png);
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            /* 移除原来的奇怪边距，改用flex对齐 */
+            margin: 0;
+        }
+
+        .nav {
+            margin-left: 10%;
+            font-size: 35px;
+        }
+
+        .nav ul {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav li {
+            list-style-type: none;
+        }
+
+        .nav li a {
+            display: block;
+            padding: 10px 18px;
+            line-height: 1.2;
+            color: rgb(251, 251, 251);
+            font-weight: bold;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: 0.2s;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav li .active,
+        .nav li a:hover {
+            border-bottom: 4px solid rgb(9, 159, 229);
+        }
+
+        /* main section 图片网格 */
+        section {
+            flex: 1 0 auto;
+            margin: 30px auto;
+            width: min(978px, 94%);
+            background-color: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(2px);
+            border-radius: 36px 36px 28px 28px;
+            padding: 20px 25px;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+        }
+
+        section ul {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 14px 0;
+            /* 垂直gap，水平由justify控制 */
+        }
+
+        section ul li {
+            width: 152px;
+            height: 152px;
+            list-style-type: none;
+            background: rgba(255, 255, 240, 0.2);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        section ul li:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 18px rgba(0, 0, 0, 0.3);
+        }
+
+        section ul li img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* 保证填满格子，不变形 */
+            display: block;
+        }
+
+        /* 新增“待更新”区域 */
+        .coming-soon {
+            flex-shrink: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            color: #fff6e0;
+            text-align: center;
+            padding: 28px 20px 32px;
+            border-top: 2px dashed #ffd966;
+            border-bottom: 2px dashed #ffd966;
+            margin-top: 20px;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .coming-soon .inner {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .coming-soon h2 {
+            font-size: 3rem;
+            letter-spacing: 8px;
+            font-weight: 400;
+            text-transform: uppercase;
+            color: #ffe484;
+            text-shadow: 0 0 10px #b1ff9b, 0 0 20px #25d500;
+            margin-bottom: 16px;
+        }
+
+        .coming-soon p {
+            font-size: 1.4rem;
+            line-height: 1.8;
+            opacity: 0.95;
+            word-break: break-word;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 18px 24px;
+            border-radius: 60px;
+            display: inline-block;
+            backdrop-filter: blur(2px);
+            border: 1px solid #ffd966;
+            box-shadow: inset 0 0 18px #b3ffaa;
+        }
+
+        .coming-soon p span {
+            display: inline-block;
+            animation: pulseGlow 2.2s infinite;
+        }
+
+        @keyframes pulseGlow {
+            0% {
+                text-shadow: 0 0 2px #fff;
+            }
+
+            50% {
+                text-shadow: 0 0 18px #ffdd77, 0 0 30px #fff2b5;
+            }
+
+            100% {
+                text-shadow: 0 0 2px #fff;
+            }
+        }
+
+
+        body>section {
+            margin-bottom: 10px;
+        }
+
+
+        @media (max-width: 800px) {
+            .nav {
+                font-size: 24px;
+                margin-left: 5%;
+            }
+
+            .nav li a {
+                padding: 6px 10px;
+            }
+
+            section ul li {
+                width: 130px;
+                height: 130px;
+            }
+        }
+
+        @media (max-width: 550px) {
+            .header .wrapper {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 5px;
+            }
+
+            .nav {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="wrapper">
+            <!-- 图片logo -->
+            <div class="logo">
+                <!-- 填坑1：返回主站（链接留空或保留#） -->
+                <a href="#">图片logo</a>
+            </div>
+            <!-- 导航栏 -->
+            <div class="nav">
+                <!-- 填坑2：主站链接 -->
+                <ul>
+                    <li><a href="#">zacky的网站</a></li>
+                    <li><a href="https://zacky-hiyohiyo.github.io/zacky.github.io/" target="_blank"
+                            rel="noopener">主页</a></li>
+                    <li><a href="https://space.bilibili.com/318950244?spm_id_from=333.1007.0.0" target="_blank"
+                            rel="noopener">B站</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 核心图片网格区 -->
+    <section>
+
+        <ul class="ul">
+
+<li class="li">
+    <a><img src="./hiyo/hiyo1.jpg" alt="ph1"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo2.jpg" alt="ph2"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo3.jpg" alt="ph3"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo4.jpg" alt="ph4"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo5.jpg" alt="ph5"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo6.jpeg" alt="ph6"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo7.jpg" alt="ph7"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo8.jpg" alt="ph8"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo9.jpg" alt="ph9"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo10.jpg" alt="ph10"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo11.jpg" alt="ph11"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo12.jpg" alt="ph12"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo13.jpg" alt="ph13"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo14.jpg" alt="ph14"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo15.jpg" alt="ph15"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo17.png" alt="ph17"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo18.png" alt="ph18"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo19.jpg" alt="ph19"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo20.jpg" alt="ph20"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo23.jpg" alt="ph23"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo24.jpg" alt="ph24"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo25.jpg" alt="ph25"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo26.jpg" alt="ph26"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo27.jpg" alt="ph27"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo28.jpg" alt="ph28"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo29.jpg" alt="ph29"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo30.png" alt="ph30"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo31.jpg" alt="ph31"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo32.jpg" alt="ph32"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo33.jpg" alt="ph33"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo34.jpg" alt="ph34"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo35.jpg" alt="ph35"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo36.jpg" alt="ph36"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo37.jpg" alt="ph37"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo38.jpg" alt="ph38"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo39.jpg" alt="ph39"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo40.jpg" alt="ph40"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo41.jpg" alt="ph41"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo42.jpg" alt="ph42"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo43.jpg" alt="ph43"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo44.jpg" alt="ph44"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo45.jpg" alt="ph45"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo46.jpg" alt="ph46"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo47.jpg" alt="ph47"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo48.jpg" alt="ph48"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo49.jpg" alt="ph49"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo50.jpg" alt="ph50"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo51.jpg" alt="ph51"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo52.jpg" alt="ph52"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo53.jpg" alt="ph53"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo54.jpg" alt="ph54"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo55.jpg" alt="ph55"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo56.jpg" alt="ph56"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo57.jpg" alt="ph57"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo58.jpg" alt="ph58"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo59.jpg" alt="ph59"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo60.jpg" alt="ph60"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo61.jpg" alt="ph61"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo62.jpg" alt="ph62"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo63.jpg" alt="ph63"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo64.jpg" alt="ph64"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo65.jpg" alt="ph65"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo66.jpg" alt="ph66"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo67.jpg" alt="ph67"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo68.jpg" alt="ph68"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo69.jpg" alt="ph69"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo70.jpg" alt="ph70"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo71.jpg" alt="ph71"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo72.jpg" alt="ph72"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo73.jpg" alt="ph73"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo74.jpg" alt="ph74"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo75.jpg" alt="ph75"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo76.jpg" alt="ph76"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo77.jpg" alt="ph77"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo78.jpg" alt="ph78"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo79.jpg" alt="ph79"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo80.jpg" alt="ph80"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo81.jpg" alt="ph81"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo82.jpg" alt="ph82"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo83.jpg" alt="ph83"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo84.jpg" alt="ph84"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo85.jpg" alt="ph85"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo86.jpg" alt="ph86"></a>
+</li>
+<li class="li">
+    <a><img src="./hiyo/hiyo87.jpg" alt="ph87"></a>
+</li>
+
+        </ul>
+    </section>
+
+
+    <div class="coming-soon">
+        <div class="inner">
+            <h2>待更新 </h2>
+        </div>
+    </div>
+    <script>
+        (function () {
+            var bodyBgs = [];
+            bodyBgs[0] = "./bg/bg1.jpg";
+            bodyBgs[1] = "./bg/bg2.png";
+            bodyBgs[2] = "./bg/bg3.png";
+            var randomBgIndex = Math.round(Math.random() * 2);  // 0,1,2
+
+            var bgUrl = bodyBgs[randomBgIndex];
+            var style = document.createElement('style');
+            style.innerHTML = 'body{background:url(' + bgUrl + ') no-repeat center center fixed; background-size: cover; -webkit-background-size: cover; -o-background-size: cover;}';
+            document.head.appendChild(style);
+        })();
+    </script>
+
+</body>
+
+</html>

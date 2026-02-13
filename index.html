@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo </title>
+    <link rel="icon" type="image/x-icon" href="./title_ico/fpm.ico">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-attachment: fixed;  /* 配合随机背景 */
+        }
+
+        .header {
+            height: 86px;
+            background-color: rgba(12, 230, 99, 0.5);
+            backdrop-filter: blur(3px);
+            width: 100%;
+            flex-shrink: 0;
+        }
+
+        .header .wrapper {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo a {
+            display: block;
+            width: 80px;
+            height: 80px;
+            font-size: 0;
+            background-image: url(./title_ico/user3.png);
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            margin: 0;
+        }
+
+        .nav {
+            margin-left: 10%;
+            font-size: 35px;
+        }
+
+        .nav ul {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav li {
+            list-style-type: none;
+        }
+
+        .nav li a {
+            display: block;
+            padding: 10px 18px;
+            line-height: 1.2;
+            color: rgb(251, 251, 251);
+            font-weight: bold;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: 0.2s;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .nav li .active,
+        .nav li a:hover {
+            border-bottom: 4px solid rgb(9, 159, 229);
+        }
+
+        /* 主内容区：原有列表 + 底部待更新 */
+        .main-content {
+            flex: 1 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        section {
+            display: flex;
+            flex-direction: column;
+            margin: 20px auto;
+            width: 978px;
+            max-width: 94%;
+            border-radius: 21px;
+        }
+
+        .gal1 {
+            font-weight: bold;
+            display: flex;
+            align-items: center;      /* 垂直居中 */
+            height: 100px;
+            width: 100%;
+            background-color: rgba(18, 237, 204, 0.3);
+            border-radius: 4px;
+            padding: 1% 1%;
+            text-decoration: none;
+            margin-top: 23px;
+            transition: 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .gal1:hover {
+            background-color: rgba(18, 237, 204, 0.6);
+            border-color: #ffdb8e;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+            transform: scale(1.01);
+        }
+
+        .pic1 {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-left: 10px;
+        }
+
+        .galg1 {
+            padding-left: 80px;
+            display: flex;
+            align-items: center;
+            color: #041fd2;
+            font-size: 30px;
+            flex: 1;
+        }
+
+        .dm {
+            width: 70px;
+            height: 70px;
+            margin-top: 9px;
+            flex-shrink: 0;
+        }
+
+        .dm img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* ===== 待更新区域 (与上方风格融合) ===== */
+        .coming-soon {
+            width: 978px;
+            max-width: 94%;
+            margin: 30px auto 50px;
+            background: rgba(20, 30, 40, 0.65);
+            backdrop-filter: blur(10px);
+            border-radius: 48px 48px 32px 32px;
+            padding: 32px 28px;
+            border: 2px solid rgba(255, 223, 128, 0.7);
+            box-shadow: 0 20px 36px rgba(0, 0, 0, 0.5), 0 0 0 2px rgba(255, 215, 0, 0.3) inset;
+            text-align: center;
+        }
+
+        .coming-soon .inner {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .coming-soon h2 {
+            font-size: 3.8rem;
+            font-weight: 500;
+            letter-spacing: 10px;
+            color: #fff3b3;
+            text-shadow: 0 0 8px #aaffaa, 0 0 20px #44ddff, 0 0 35px #ffcc66;
+            margin-bottom: 18px;
+            word-break: keep-all;
+            animation: softGlow 2.2s infinite alternate;
+        }
+
+        @keyframes softGlow {
+            0% { text-shadow: 0 0 4px #fffacd, 0 0 12px #92f0ff; }
+            100% { text-shadow: 0 0 16px #ffdb8e, 0 0 32px #6effc1, 0 0 48px #ffb347; }
+        }
+
+        .coming-soon p {
+            font-size: 1.8rem;
+            line-height: 1.5;
+            color: #f0f7da;
+            background: rgba(0, 0, 0, 0.35);
+            padding: 20px 28px;
+            border-radius: 80px;
+            backdrop-filter: blur(4px);
+            border: 1px solid #f3c96b;
+            display: inline-block;
+            box-shadow: 0 8px 18px #00000055;
+        }
+
+        .coming-soon p span {
+            display: inline-block;
+            filter: drop-shadow(0 0 6px gold);
+        }
+
+        /* 小屏适配 */
+        @media (max-width: 700px) {
+            .nav {
+                font-size: 24px;
+                margin-left: 5%;
+            }
+            .galg1 {
+                font-size: 22px;
+                padding-left: 30px;
+            }
+            .coming-soon h2 {
+                font-size: 2.8rem;
+                letter-spacing: 5px;
+            }
+            .coming-soon p {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="wrapper">
+            <!-- 图片logo -->
+            <div class="logo"> 
+                <a href="#">图片logo</a>
+            </div>
+            <!-- 导航栏 -->
+            <div class="nav">
+                <ul>
+                    <li><a href="#">表情包测试</a></li>
+                    <li><a href="https://zacky-hiyohiyo.github.io/zacky.github.io/" target="_blank">主页</a></li>
+                    <li><a href="https://space.bilibili.com/318950244?spm_id_from=333.1007.0.0" target="_blank">B站</a></li>
+                </ul>
+            </div> 
+        </div>
+    </div>
+
+    <div class="main-content">
+        <section>
+            <a href="./pet1.html" class="gal1">
+                <img src="./bg/gal1.png" class="pic1" alt="icon">
+                <span class="galg1">不败的世界与终焉之花【1】</span>
+                <span class="dm">
+                    <img src="./dm/dm.png" alt="dm">
+                </span>
+            </a>  
+
+            <a href="./pet2.html" class="gal1">
+                <img src="./bg/gal1.png" class="pic1" alt="icon">
+                <span class="galg1">幸运的四叶草【2】</span>
+                <span class="dm">
+                    <img src="./dm/dm.png" alt="dm">
+                </span>
+            </a>  
+
+            <a href="./pet3.html" class="gal1">
+                <img src="./bg/gal1.png" class="pic1" alt="icon">
+                <span class="galg1">灵感满溢【3】</span>
+                <span class="dm">
+                    <img src="./dm/dm.png" alt="dm">
+                </span>
+            </a>  
+
+            <a href="#" class="gal1">
+                <img src="./bg/gal1.png" class="pic1" alt="icon">
+                <span class="galg1">樱之诗【4】</span>
+                <span class="dm">
+                    <img src="./dm/dm.png" alt="dm">
+                </span>
+            </a>  
+
+            <a href="#" class="gal1">
+                <img src="./bg/gal1.png" class="pic1" alt="icon">
+                <span class="galg1">樱之刻【5】</span>
+                <span class="dm">
+                    <img src="./dm/dm.png" alt="dm">
+                </span>
+            </a>  
+
+            <a href="#" class="gal1">
+                <img src="./bg/gal1.png" class="pic1" alt="icon">
+                <span class="galg1">魔女的裁决审判【6】</span>
+                <span class="dm">
+                    <img src="./dm/dm.png" alt="dm">
+                </span>
+            </a>  
+        </section>
+
+    </div>
+
+    <!-- 随机背景脚本 (优化为不覆盖页面) -->
+    <script>
+        (function() {
+            var bodyBgs = [];
+            bodyBgs[0] = "./bg/bg1.jpg";
+            bodyBgs[1] = "./bg/bg2.png";
+            bodyBgs[2] = "./bg/bg3.png";
+            var randomBgIndex = Math.round(Math.random() * 2);
+            // 使用style标签注入背景，避免document.write潜在问题
+            var style = document.createElement('style');
+            style.innerHTML = 'body{background:url(' + bodyBgs[randomBgIndex] + ') no-repeat center center fixed; background-size: cover;}';
+            document.head.appendChild(style);
+        })();
+    </script>
+</body>
+</html>
